@@ -46,6 +46,27 @@ class ExcelExporterKotlinIT {
 
     }
 
+    @Test
+    fun createManyDataExcel(){
+        // BEFORE
+        val file = File("src/test/kotlin/com/michibaum/excel/export/kotlin/exports/ManyDataExcel")
+        val data: MutableList<UserDataK> = ArrayList()
+        val date = Date()
+        for (i in 0..9999) {
+            data.add(
+                UserDataK("Rudolf$i", "password$i", "key$i", "key2_$i", true, date)
+            )
+        }
+        val sheets = listOf(Sheet("userData", data))
+        val excelExporter = ExcelExporter(file, sheets)
+
+        //THEN
+        excelExporter.process()
+
+        //AFTER
+
+    }
+
 }
 
 class UserDataK(
