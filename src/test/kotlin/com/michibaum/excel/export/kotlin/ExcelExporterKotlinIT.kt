@@ -5,20 +5,39 @@ import org.junit.jupiter.api.Test
 import java.util.*
 
 class ExcelExporterKotlinIT {
-    
 
     @Test
     fun createSimpleExcel(){
         // BEFORE
-        val file = File("src/test/kotlin/com/michibaum/excel/export/kotlin/exports")
+        val file = File("src/test/kotlin/com/michibaum/excel/export/kotlin/exports/SimpleExcel")
         val data = listOf(
             UserDataK("Rudolf", "password1234", "key", "key2", true, Date()),
             UserDataK("Rudolf", "password1234", "key", "key2", true, Date()),
             UserDataK("Rudolf", "password1234", "key", "key2", true, Date()),
             UserDataK("Rudolf", "password1234", "key", "key2", true, Date())
         )
-        val settings = Sheet("userData", data)
-        val excelExporter = ExcelExporter(file, listOf(settings))
+        val sheet = Sheet("userData", data)
+        val excelExporter = ExcelExporter(file, listOf(sheet))
+
+        //THEN
+        excelExporter.process()
+
+        //AFTER
+
+    }
+
+    @Test
+    fun createMultiSheetExcel(){
+        // BEFORE
+        val file = File("src/test/kotlin/com/michibaum/excel/export/kotlin/exports/MultiSheetExcel")
+        val data = listOf(
+            UserDataK("Rudolf", "password1234", "key", "key2", true, Date()),
+            UserDataK("Rudolf", "password1234", "key", "key2", true, Date()),
+            UserDataK("Rudolf", "password1234", "key", "key2", true, Date()),
+            UserDataK("Rudolf", "password1234", "key", "key2", true, Date())
+        )
+        val sheets = listOf(Sheet("userData", data), Sheet("admins", data))
+        val excelExporter = ExcelExporter(file, sheets)
 
         //THEN
         excelExporter.process()

@@ -12,7 +12,7 @@ class File(
 
     private val fileEnding: String = ".xlsx"
     val fullPath: String = path + "/" + this.filename + this.fileEnding
-    private val file: File = File(this.fullPath)
+    val file: File = File(this.fullPath)
     val workbook = XSSFWorkbook()
 
     init {
