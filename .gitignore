@@ -1,4 +1,5 @@
 /.idea/
+!/.idea/runConfigurations/
 /conversion_utils.iml
 /target/
 /src/test/kotlin/com/michibaum/excel/export/java/exports/
