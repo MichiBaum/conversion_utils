@@ -2,7 +2,9 @@ package com.michibaum.excel.export
 
 class Sheet(
     val sheetname: String,
-    val data: List<ExcelExportClass>
+    data: List<ExcelExportClass>
 ) {
+
+    var dataObjects: List<Row> = data.map { it.getFieldsWithAnnotation() }
 
 }

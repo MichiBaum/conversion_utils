@@ -2,7 +2,6 @@ package com.michibaum.excel.export
 
 import org.apache.poi.xssf.usermodel.XSSFCell
 import org.apache.poi.xssf.usermodel.XSSFSheet
-import java.io.FileOutputStream
 import java.lang.reflect.Field
 
 class ExcelExporter(
@@ -11,26 +10,25 @@ class ExcelExporter(
 ) {
 
     fun process(): java.io.File {
-        sheets.forEach { sheet ->
-            val xssfSheet = file.workbook.createSheet(sheet.sheetname)
-            val objekts = sheet.data.map { it.getFieldsWithAnnotation() }
+        sheets.forEach { _sheet ->
+            val xssfSheet = file.createSheet(_sheet.sheetname)
 
-            createHeader(objekts, xssfSheet)
+            createHeader(_sheet.dataObjects, xssfSheet)
 
-            fillData(objekts, xssfSheet)
+            fillData(_sheet.dataObjects, xssfSheet)
 
-            setWidth(objekts, xssfSheet)
+            setWidth(_sheet.dataObjects, xssfSheet)
         }
 
-        FileOutputStream(file.fullPath).use { file.workbook.write(it) }
+        file.write()
         return file.file
 
     }
 
-    private fun setWidth(objekts: List<Objekt>, sheet: XSSFSheet) {
-        objekts.first().fields.forEach { field ->
-            field.isAccessible = true
-            val excelFieldAnnotation = field.getDeclaredAnnotation(ExcelField::class.java)
+    private fun setWidth(rows: List<Row>, sheet: XSSFSheet) {
+        rows.first().fields.forEach { _field ->
+            _field.isAccessible = true
+            val excelFieldAnnotation = _field.getDeclaredAnnotation(ExcelField::class.java)
             when(excelFieldAnnotation.width){
                 ColumnWidth.AUTO -> sheet.autoSizeColumn(excelFieldAnnotation.order)
                 ColumnWidth.SMALL -> sheet.setColumnWidth(excelFieldAnnotation.order, ColumnWidth.SMALL.characters * 256)
@@ -43,29 +41,29 @@ class ExcelExporter(
         }
     }
 
-    private fun fillData(objekts: List<Objekt>, sheet: XSSFSheet) {
+    private fun fillData(rows: List<Row>, sheet: XSSFSheet) {
         var rowIndex = 1
-        objekts.forEach { clazz ->
+        rows.forEach { _row ->
             val row = sheet.createRow(rowIndex)
-            clazz.fields.forEach { field ->
+            _row.fields.forEach { field ->
                 field.isAccessible = true
                 val excelFieldAnnotation = field.getDeclaredAnnotation(ExcelField::class.java)
                 val cell = row.createCell(excelFieldAnnotation.order)
-                fillCell(cell, field, clazz)
+                fillCell(cell, field, _row)
             }
             rowIndex++
         }
     }
 
-    private fun fillCell(cell: XSSFCell, field: Field, objekt: Objekt) {
-        cell.setCellValue(field.get(objekt.referenceObject).toString())
+    private fun fillCell(cell: XSSFCell, field: Field, row: Row) {
+        cell.setCellValue(field.get(row.referenceObject).toString())
     }
 
-    private fun createHeader(objekts: List<Objekt>, sheet: XSSFSheet) {
+    private fun createHeader(rows: List<Row>, sheet: XSSFSheet) {
         val row = sheet.createRow(0)
-        objekts.first().fields.forEach {
-            it.isAccessible = true
-            val excelFieldAnnotation = it.getDeclaredAnnotation(ExcelField::class.java)
+        rows.first().fields.forEach { _field ->
+            _field.isAccessible = true
+            val excelFieldAnnotation = _field.getDeclaredAnnotation(ExcelField::class.java)
             row.createCell(excelFieldAnnotation.order).setCellValue(excelFieldAnnotation.headerText)
         }
     }
