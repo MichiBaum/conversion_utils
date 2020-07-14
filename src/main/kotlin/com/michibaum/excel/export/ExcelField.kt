@@ -5,6 +5,6 @@ package com.michibaum.excel.export
 annotation class ExcelField(
     val headerText: String,
     val order: Int,
-    val width: WidthEnum
+    val width: ColumnWidth
 ) {
 }

@@ -1,6 +1,6 @@
 package com.michibaum.excel.export
 
-enum class WidthEnum {
+enum class ColumnWidth {
     AUTO,
     SMALL,
     MIDDLE,

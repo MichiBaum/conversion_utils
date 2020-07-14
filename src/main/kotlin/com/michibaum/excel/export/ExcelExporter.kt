@@ -7,7 +7,7 @@ import java.lang.reflect.Field
 
 class ExcelExporter(
     private val file: File,
-    private val settings: List<Settings>
+    private val settings: List<Sheet>
 ) {
 
     fun process() {
@@ -18,15 +18,16 @@ class ExcelExporter(
             createHeader(clazzes, sheet)
 
             fillData(clazzes, sheet)
+
         }
 
         FileOutputStream(file.fullPath).use { outputStream -> file.workbook.write(outputStream) }
 
     }
 
-    private fun fillData(clazzes: List<Clazz>, sheet: XSSFSheet) {
+    private fun fillData(objekts: List<Objekt>, sheet: XSSFSheet) {
         var rowIndex = 1
-        clazzes.forEach { clazz ->
+        objekts.forEach { clazz ->
             val row = sheet.createRow(rowIndex)
             var cellIndex = 0
             clazz.fields.forEach { field ->
@@ -41,16 +42,16 @@ class ExcelExporter(
         }
     }
 
-    private fun fillCell(cell: XSSFCell, field: Field, clazz: Clazz) {
-        cell.setCellValue(field.get(clazz.objekt).toString())
+    private fun fillCell(cell: XSSFCell, field: Field, objekt: Objekt) {
+        cell.setCellValue(field.get(objekt.referenceObject).toString())
     }
 
     private fun createHeader(
-        clazzes: List<Clazz>,
+        objekts: List<Objekt>,
         sheet: XSSFSheet
     ) {
         val row = sheet.createRow(0)
-        clazzes.first().fields.forEach {
+        objekts.first().fields.forEach {
             it.isAccessible = true
             it.getDeclaredAnnotation(ExcelField::class.java)
                 .order

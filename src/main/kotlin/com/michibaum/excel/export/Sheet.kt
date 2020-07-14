@@ -1,6 +1,6 @@
 package com.michibaum.excel.export
 
-class Settings(
+class Sheet(
     val sheetname: String,
     val data: List<ExcelExportClass>
 ) {
