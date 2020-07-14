@@ -4,15 +4,12 @@ import java.lang.reflect.Field
 
 abstract class ExcelExportClass {
 
+    @Suppress("UNCHECKED_CAST")
     fun getFieldsWithAnnotation() =
         Clazz(
-            this::class.java.declaredFields.toList() // TODO all fields are private because of java
-                .filter {
-                    if(!it.isAccessible) {
-                        return@filter false
-                    }else {
-                        return@filter it.getDeclaredAnnotation(ExcelField::class.java) != null
-                    }
+            this::class.java.declaredFields.toList()
+                .filter{ //TODO Filter for access
+                    return@filter it.isAnnotationPresent(ExcelField::class.java)
                 },
             this
         )
@@ -27,6 +24,7 @@ data class Clazz(val fields: List<Field>, val objekt: Any){
 
     private fun sortFields(){
         this.fields.sortedByDescending {
+            it.isAccessible = true
             it.getDeclaredAnnotation(ExcelField::class.java).order
         }
     }

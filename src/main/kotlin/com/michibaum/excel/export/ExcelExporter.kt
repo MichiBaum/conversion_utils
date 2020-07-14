@@ -1,20 +1,19 @@
 package com.michibaum.excel.export
 
+import org.apache.poi.xssf.usermodel.XSSFCell
 import org.apache.poi.xssf.usermodel.XSSFSheet
-import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import java.io.FileOutputStream
-import java.util.*
+import java.lang.reflect.Field
 
-
-class ExcelExporter<T>(
-    val file: File,
-    val settings: List<Settings>
+class ExcelExporter(
+    private val file: File,
+    private val settings: List<Settings>
 ) {
 
-    fun process(){
-        settings.forEach{
-            val sheet = file.workbook.createSheet(it.sheetname)
-            val clazzes = it.data.map(ExcelExportClass::getFieldsWithAnnotation)
+    fun process() {
+        settings.forEach { settings ->
+            val sheet = file.workbook.createSheet(settings.sheetname)
+            val clazzes = settings.data.map { it.getFieldsWithAnnotation() }
 
             createHeader(clazzes, sheet)
 
@@ -27,15 +26,23 @@ class ExcelExporter<T>(
 
     private fun fillData(clazzes: List<Clazz>, sheet: XSSFSheet) {
         var rowIndex = 1
-        clazzes.forEach {clazz ->
+        clazzes.forEach { clazz ->
             val row = sheet.createRow(rowIndex)
             var cellIndex = 0
-            clazz.fields.forEach{ field ->
-                row.createCell(cellIndex).setCellValue(field.get(clazz.objekt as T).toString())
+            clazz.fields.forEach { field ->
+                field.isAccessible = true
+                val cell = field.getDeclaredAnnotation(ExcelField::class.java).order.let { row.createCell(it) }
+                if (cell != null) {
+                    fillCell(cell, field, clazz)
+                }
                 cellIndex++
             }
             rowIndex++
         }
+    }
+
+    private fun fillCell(cell: XSSFCell, field: Field, clazz: Clazz) {
+        cell.setCellValue(field.get(clazz.objekt).toString())
     }
 
     private fun createHeader(
@@ -43,10 +50,13 @@ class ExcelExporter<T>(
         sheet: XSSFSheet
     ) {
         val row = sheet.createRow(0)
-        var cellIndex = 0
         clazzes.first().fields.forEach {
-            row.createCell(cellIndex).setCellValue(it.getDeclaredAnnotation(ExcelField::class.java).headerText)
-            cellIndex++
+            it.isAccessible = true
+            it.getDeclaredAnnotation(ExcelField::class.java)
+                .order
+                .let { it1 ->
+                    row.createCell(it1).setCellValue(it.getDeclaredAnnotation(ExcelField::class.java).headerText)
+                }
         }
     }
 

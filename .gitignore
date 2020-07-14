@@ -1,4 +1,5 @@
 /.idea/
 /conversion_utils.iml
-/src/test/kotlin/com/michibaum/excel/export/exports/
 /target/
+/src/test/kotlin/com/michibaum/excel/export/java/exports/
+/src/test/kotlin/com/michibaum/excel/export/kotlin/exports/
