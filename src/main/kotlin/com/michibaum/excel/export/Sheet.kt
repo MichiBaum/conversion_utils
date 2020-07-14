@@ -5,6 +5,6 @@ class Sheet(
     data: List<ExcelExportClass>
 ) {
 
-    var dataObjects: List<Row> = data.map { it.getFieldsWithAnnotation() }
+    internal var dataObjects: List<Row> = data.map { it.getFieldsWithAnnotation() }
 
 }

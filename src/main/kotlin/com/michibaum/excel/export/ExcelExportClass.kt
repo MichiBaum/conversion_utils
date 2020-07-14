@@ -1,10 +1,8 @@
 package com.michibaum.excel.export
 
-import java.lang.reflect.Field
-
 open class ExcelExportClass {
 
-    fun getFieldsWithAnnotation() =
+    internal fun getFieldsWithAnnotation() =
         Row(
             this::class.java.declaredFields.toList()
                 .filter{ _field ->

@@ -13,19 +13,19 @@ class File(
 ) {
 
     private val fileEnding: String = ".xlsx"
-    val fullPath: String = path + "/" + this.filename + this.fileEnding
-    val file: File = File(this.fullPath)
-    val workbook = XSSFWorkbook()
+    private val fullPath: String = path + "/" + this.filename + this.fileEnding
+    internal val file: File = File(this.fullPath)
+    private val workbook = XSSFWorkbook()
 
     init {
         File(this.path).mkdirs()
     }
 
-    fun createSheet(name: String): XSSFSheet {
+    internal fun createSheet(name: String): XSSFSheet {
         return this.workbook.createSheet(name)
     }
 
-    fun write() {
+    internal fun write() {
         FileOutputStream(fullPath).use { workbook.write(it) }
     }
 
