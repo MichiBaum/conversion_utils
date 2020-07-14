@@ -4,6 +4,7 @@ package com.michibaum.excel.export
  * Enum to set Column width in ExcelField annotation
  */
 enum class ColumnWidth(val characters: Int) {
+
     /**
      * The width is adjusted automatically
      */

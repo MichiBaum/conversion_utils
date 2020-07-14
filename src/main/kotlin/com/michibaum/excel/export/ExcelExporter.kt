@@ -4,11 +4,25 @@ import org.apache.poi.xssf.usermodel.XSSFCell
 import org.apache.poi.xssf.usermodel.XSSFSheet
 import java.lang.reflect.Field
 
+/**
+ *
+ */
 class ExcelExporter(
+
+    /**
+     *
+     */
     private val file: File,
+
+    /**
+     *
+     */
     private val sheets: List<Sheet>
 ) {
 
+    /**
+     *
+     */
     fun process(): java.io.File {
         sheets.forEach { _sheet ->
             val xssfSheet = file.createSheet(_sheet.sheetname)
@@ -25,6 +39,9 @@ class ExcelExporter(
 
     }
 
+    /**
+     *
+     */
     private fun setWidth(rows: List<Row>, sheet: XSSFSheet) {
         rows.first().fields.forEach { _field ->
             _field.isAccessible = true
@@ -41,6 +58,9 @@ class ExcelExporter(
         }
     }
 
+    /**
+     *
+     */
     private fun fillData(rows: List<Row>, sheet: XSSFSheet) {
         var rowIndex = 1
         rows.forEach { _row ->
@@ -55,10 +75,16 @@ class ExcelExporter(
         }
     }
 
+    /**
+     *
+     */
     private fun fillCell(cell: XSSFCell, field: Field, row: Row) {
         cell.setCellValue(field.get(row.referenceObject).toString())
     }
 
+    /**
+     *
+     */
     private fun createHeader(rows: List<Row>, sheet: XSSFSheet) {
         val row = sheet.createRow(0)
         rows.first().fields.forEach { _field ->
