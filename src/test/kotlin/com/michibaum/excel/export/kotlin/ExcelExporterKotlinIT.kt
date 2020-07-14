@@ -4,9 +4,15 @@ import com.michibaum.excel.export.*
 import org.junit.jupiter.api.Test
 import java.util.*
 
+/**
+ *
+ */
 class ExcelExporterKotlinIT {
 
     @Test
+    /**
+     *
+     */
     fun createSimpleExcel(){
         // BEFORE
         val file = File("src/test/kotlin/com/michibaum/excel/export/kotlin/exports/SimpleExcel")
@@ -27,6 +33,9 @@ class ExcelExporterKotlinIT {
     }
 
     @Test
+    /**
+     *
+     */
     fun createMultiSheetExcel(){
         // BEFORE
         val file = File("src/test/kotlin/com/michibaum/excel/export/kotlin/exports/MultiSheetExcel")
@@ -47,6 +56,9 @@ class ExcelExporterKotlinIT {
     }
 
     @Test
+    /**
+     *
+     */
     fun createManyDataExcel(){
         // BEFORE
         val file = File("src/test/kotlin/com/michibaum/excel/export/kotlin/exports/ManyDataExcel")
@@ -69,6 +81,9 @@ class ExcelExporterKotlinIT {
 
 }
 
+/**
+ *
+ */
 class UserDataK(
     @ExcelField(headerText = "Username", order = 0, width = ColumnWidth.AUTO)
     val username: String,

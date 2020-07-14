@@ -6,6 +6,9 @@ import com.michibaum.excel.export.ColumnWidth;
 
 import java.util.Date;
 
+/**
+ *
+ */
 class UserDataJ extends ExcelExportClass {
 
     @ExcelField(headerText = "Username", order = 0, width = ColumnWidth.AUTO)
