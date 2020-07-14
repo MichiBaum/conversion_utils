@@ -4,7 +4,6 @@ import java.lang.reflect.Field
 
 open class ExcelExportClass {
 
-    @Suppress("UNCHECKED_CAST")
     fun getFieldsWithAnnotation() =
         Objekt(
             this::class.java.declaredFields.toList()
