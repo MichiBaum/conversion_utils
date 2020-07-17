@@ -6,7 +6,7 @@ package com.michibaum.excel.export
 open class ExcelExportClass {
 
     /**
-     *
+     * Gets all the fields with the annotation ExcelField and put it into a Row object
      */
     internal fun getFieldsWithAnnotation() =
         Row(

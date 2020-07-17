@@ -27,11 +27,11 @@ class ExcelExporter(
         sheets.forEach { _sheet ->
             val xssfSheet = file.createSheet(_sheet.sheetname)
 
-            createHeader(_sheet.dataObjects, xssfSheet)
+            createHeader(_sheet.rows, xssfSheet)
 
-            fillData(_sheet.dataObjects, xssfSheet)
+            fillData(_sheet.rows, xssfSheet)
 
-            setWidth(_sheet.dataObjects, xssfSheet)
+            setWidth(_sheet.rows, xssfSheet)
         }
 
         file.write()
