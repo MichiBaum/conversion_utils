@@ -23,7 +23,7 @@ class UserDataJ extends ExcelExportClass {
     @ExcelField(headerText = "Key2", order = 4, width = ColumnWidth.AUTO)
     private String key2;
 
-    @ExcelField(headerText = "Active", order = 1, width = ColumnWidth.SMALL)
+    @ExcelField(headerText = "Active", order = 1, width = ColumnWidth.SMALL, cellType = CellType.BOOLEAN)
     Boolean active;
 
     @ExcelField(headerText = "Last login", order = 2, width = ColumnWidth.MIDDLE)

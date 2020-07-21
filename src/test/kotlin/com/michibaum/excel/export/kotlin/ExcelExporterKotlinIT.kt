@@ -94,7 +94,7 @@ class UserDataK(
     val key: String,
     @ExcelField(headerText = "Key2", order = 4, width = ColumnWidth.AUTO)
     private val key2: String,
-    @ExcelField(headerText = "Active", order = 1, width = ColumnWidth.SMALL)
+    @ExcelField(headerText = "Active", order = 1, width = ColumnWidth.SMALL, cellType = CellType.BOOLEAN)
     val active: Boolean?,
     @ExcelField(headerText = "Last login", order = 2, width = ColumnWidth.MIDDLE)
     val lastLogin: Date,
