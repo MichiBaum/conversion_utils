@@ -87,19 +87,27 @@ class ExcelExporterKotlinIT {
  *
  */
 class UserDataK(
+
     @ExcelField(headerText = "Username", order = 0, width = ColumnWidth.AUTO)
     val username: String,
+
     private val password: String,
+
     @ExcelField(headerText = "Key", order = 3, width = ColumnWidth.LARGE)
     val key: String,
+
     @ExcelField(headerText = "Key2", order = 4, width = ColumnWidth.AUTO)
     private val key2: String,
+
     @ExcelField(headerText = "Active", order = 1, width = ColumnWidth.SMALL, cellType = CellType.BOOLEAN)
-    val active: Boolean?,
+    val active: Boolean,
+
     @ExcelField(headerText = "Last login", order = 2, width = ColumnWidth.MIDDLE)
     val lastLogin: Date,
+
     @ExcelField(headerText = "number", order = 2, width = ColumnWidth.MIDDLE, cellType = CellType.NUMERIC)
     val number: Int
+
 ): ExcelExportClass() {
 
     fun getKeysTogether(): String {

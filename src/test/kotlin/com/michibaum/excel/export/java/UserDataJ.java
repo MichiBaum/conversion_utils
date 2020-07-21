@@ -24,13 +24,13 @@ class UserDataJ extends ExcelExportClass {
     private String key2;
 
     @ExcelField(headerText = "Active", order = 1, width = ColumnWidth.SMALL, cellType = CellType.BOOLEAN)
-    Boolean active;
+    boolean active;
 
     @ExcelField(headerText = "Last login", order = 2, width = ColumnWidth.MIDDLE)
     Date lastLogin;
 
     @ExcelField(headerText = "number", order = 2, width = ColumnWidth.MIDDLE, cellType = CellType.NUMERIC)
-    Integer number;
+    int number;
 
     UserDataJ(String username, String password, String key, String key2, Boolean active, Date lastLogin, Integer number){
         this.username = username;
