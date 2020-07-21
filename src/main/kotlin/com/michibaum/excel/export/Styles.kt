@@ -1,11 +1,22 @@
 package com.michibaum.excel.export
 
 import org.apache.poi.ss.usermodel.*
+import org.apache.poi.xssf.usermodel.XSSFCellStyle
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 
+/**
+ *
+ *
+ * @author Baumberger Michael
+ */
 class Styles(workbook: XSSFWorkbook){
 
-    val HEADER_STYLE = workbook.createCellStyle().also { style ->
+    /**
+     *
+     *
+     * @author Baumberger Michael
+     */
+    val HEADER_STYLE: XSSFCellStyle = workbook.createCellStyle().also { style ->
         style.alignment = HorizontalAlignment.LEFT
         style.verticalAlignment = VerticalAlignment.CENTER
 
@@ -18,7 +29,12 @@ class Styles(workbook: XSSFWorkbook){
         style.borderBottom = BorderStyle.THIN
     }
 
-    val DETAIL_ROW_STYLE = workbook.createCellStyle().also { style ->
+    /**
+     *
+     *
+     * @author Baumberger Michael
+     */
+    val DETAIL_ROW_STYLE: XSSFCellStyle = workbook.createCellStyle().also { style ->
         style.alignment = HorizontalAlignment.LEFT
         style.verticalAlignment = VerticalAlignment.CENTER
 
@@ -26,7 +42,6 @@ class Styles(workbook: XSSFWorkbook){
         style.borderRight = BorderStyle.THIN
         style.borderTop = BorderStyle.THIN
         style.borderBottom = BorderStyle.THIN
-
     }
 
 }

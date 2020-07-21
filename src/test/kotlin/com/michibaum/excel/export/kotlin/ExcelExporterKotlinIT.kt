@@ -7,12 +7,16 @@ import java.util.*
 
 /**
  *
+ *
+ * @author Baumberger Michael
  */
 class ExcelExporterKotlinIT {
 
     @Test
     /**
      *
+     *
+     * @author Baumberger Michael
      */
     fun createSimpleExcel(){
         // BEFORE
@@ -36,6 +40,8 @@ class ExcelExporterKotlinIT {
     @Test
     /**
      *
+     *
+     * @author Baumberger Michael
      */
     fun createMultiSheetExcel(){
         // BEFORE
@@ -60,6 +66,8 @@ class ExcelExporterKotlinIT {
     @Test
     /**
      *
+     *
+     * @author Baumberger Michael
      */
     fun createManyDataExcel(){
         // BEFORE
@@ -85,6 +93,8 @@ class ExcelExporterKotlinIT {
 
 /**
  *
+ *
+ * @author Baumberger Michael
  */
 class UserDataK(
 

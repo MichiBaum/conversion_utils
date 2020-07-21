@@ -9,6 +9,8 @@ import java.util.Date;
 
 /**
  *
+ *
+ * @author Baumberger Michael
  */
 class UserDataJ extends ExcelExportClass {
 

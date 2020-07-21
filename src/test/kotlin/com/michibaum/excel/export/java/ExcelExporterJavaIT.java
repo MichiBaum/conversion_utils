@@ -11,12 +11,16 @@ import java.util.List;
 
 /**
  *
+ *
+ * @author Baumberger Michael
  */
 public class ExcelExporterJavaIT {
 
     @Test
     /**
      *
+     *
+     * @author Baumberger Michael
      */
     public void createSimpleExcel(){
         // BEFORE
@@ -39,6 +43,8 @@ public class ExcelExporterJavaIT {
     @Test
     /**
      *
+     *
+     * @author Baumberger Michael
      */
     public void createMultiSheetExcel(){
         // BEFORE
@@ -62,6 +68,8 @@ public class ExcelExporterJavaIT {
     @Test
     /**
      *
+     *
+     * @author Baumberger Michael
      */
     public void createManyDataExcel(){
         // BEFORE

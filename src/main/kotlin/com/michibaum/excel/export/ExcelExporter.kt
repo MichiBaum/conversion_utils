@@ -9,20 +9,32 @@ import java.util.*
 
 /**
  *
+ *
+ * @author Baumberger Michael
  */
 class ExcelExporter(
 
     /**
      *
+     *
+     * @author Baumberger Michael
      */
     private val file: File,
 
     /**
+     * All Excel sheets
      *
+     * @author Baumberger Michael
      */
     private vararg val sheets: Sheet
 ) {
 
+    /**
+     * Runs after class instantiated
+     * For every sheet it checks if the header or data style is null and if true it sets the default styles
+     *
+     * @author Baumberger Michael
+     */
     init {
         sheets.forEach {sheet ->
             if(sheet.headerStyle == null){
@@ -35,7 +47,9 @@ class ExcelExporter(
     }
 
     /**
+     * Processes everything. Creates the excel and saves it.
      *
+     * @author Baumberger Michael
      */
     fun process(): java.io.File {
         sheets.forEach { _sheet ->
@@ -45,7 +59,7 @@ class ExcelExporter(
 
             fillData(_sheet, xssfSheet)
 
-            setWidth(_sheet.rows, xssfSheet)
+            setWidth(_sheet, xssfSheet)
         }
 
         file.write()
@@ -54,19 +68,21 @@ class ExcelExporter(
     }
 
     /**
+     * Sets the width of all columns
      *
+     * @author Baumberger Michael
      */
-    private fun setWidth(rows: List<Row>, sheet: XSSFSheet) {
-        rows.first().fields.forEach { _field ->
+    private fun setWidth(sheet: Sheet, xssfSheet: XSSFSheet) {
+        sheet.rows.first().fields.forEach { _field ->
             _field.isAccessible = true
             val excelFieldAnnotation = _field.getDeclaredAnnotation(ExcelField::class.java)
             when(excelFieldAnnotation.width){
-                ColumnWidth.AUTO -> sheet.autoSizeColumn(excelFieldAnnotation.order)
-                ColumnWidth.SMALL -> sheet.setColumnWidth(excelFieldAnnotation.order, ColumnWidth.SMALL.characters * 256)
-                ColumnWidth.MIDDLE -> sheet.setColumnWidth(excelFieldAnnotation.order, ColumnWidth.MIDDLE.characters * 256)
-                ColumnWidth.LARGE -> sheet.setColumnWidth(excelFieldAnnotation.order, ColumnWidth.LARGE.characters * 256)
-                ColumnWidth.X_LARGE -> sheet.setColumnWidth(excelFieldAnnotation.order, ColumnWidth.X_LARGE.characters * 256)
-                ColumnWidth.XX_LARGE -> sheet.setColumnWidth(excelFieldAnnotation.order, ColumnWidth.XX_LARGE.characters * 256)
+                ColumnWidth.AUTO -> xssfSheet.autoSizeColumn(excelFieldAnnotation.order)
+                ColumnWidth.SMALL -> xssfSheet.setColumnWidth(excelFieldAnnotation.order, ColumnWidth.SMALL.characters * 256)
+                ColumnWidth.MIDDLE -> xssfSheet.setColumnWidth(excelFieldAnnotation.order, ColumnWidth.MIDDLE.characters * 256)
+                ColumnWidth.LARGE -> xssfSheet.setColumnWidth(excelFieldAnnotation.order, ColumnWidth.LARGE.characters * 256)
+                ColumnWidth.X_LARGE -> xssfSheet.setColumnWidth(excelFieldAnnotation.order, ColumnWidth.X_LARGE.characters * 256)
+                ColumnWidth.XX_LARGE -> xssfSheet.setColumnWidth(excelFieldAnnotation.order, ColumnWidth.XX_LARGE.characters * 256)
             }
 
         }
@@ -74,6 +90,8 @@ class ExcelExporter(
 
     /**
      * For every row in the sheet it creates a row and fills the cell with the row data object
+     *
+     * @author Baumberger Michael
      */
     private fun fillData(sheet: Sheet, xssfSheet: XSSFSheet) {
         var rowIndex = 1
@@ -100,6 +118,8 @@ class ExcelExporter(
      *
      * !! Kotlin nullable datatypes not detected !!
      * !! Kotlin use not nullable datatypes !!
+     *
+     * @author Baumberger Michael
      */
     //TODO Add java non primitive data types detection
     //TODO Kotlin nullable datatypes not detected
@@ -144,6 +164,8 @@ class ExcelExporter(
 
     /**
      * creates the header row and fill the data
+     *
+     * @author Baumberger Michael
      */
     private fun createHeader(sheet: Sheet, xssfSheet: XSSFSheet) {
         val row = xssfSheet.createRow(0)
