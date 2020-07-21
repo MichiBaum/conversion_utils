@@ -22,12 +22,12 @@ public class ExcelExporterJavaIT {
         // BEFORE
         File file = new File("src/test/kotlin/com/michibaum/excel/export/java/exports/SimpleExcel", "export_" + new Date().getTime());
         List<UserDataJ> data = List.of(
-                new UserDataJ("Rudolf", "password1234", "key", "key2", true, new Date(), 2),
-                new UserDataJ("Rudolf", "password1234", "key", "key2", true, new Date(), 2),
-                new UserDataJ("Rudolf", "password1234", "key", "key2", true, new Date(), 2),
-                new UserDataJ("Rudolf", "password1234", "key", "key2", true, new Date(), 2)
+                new UserDataJ("Java", "password1234", "key", "key2", true, new Date(), 2),
+                new UserDataJ("Java", "password1234", "key", "key2", true, new Date(), 2),
+                new UserDataJ("Java", "password1234", "key", "key2", true, new Date(), 2),
+                new UserDataJ("Java", "password1234", "key", "key2", true, new Date(), 2)
         );
-        Sheet sheet = new Sheet("userData", data);
+        Sheet sheet = new Sheet("userData", data, null, null);
         ExcelExporter excelExporter = new ExcelExporter(file, sheet);
 
         //THEN
@@ -44,13 +44,13 @@ public class ExcelExporterJavaIT {
         // BEFORE
         File file = new File("src/test/kotlin/com/michibaum/excel/export/java/exports/MultiSheetExcel", "export_" + new Date().getTime());
         List<UserDataJ> data = List.of(
-                new UserDataJ("Rudolf", "password1234", "key", "key2", true, new Date(), 2),
-                new UserDataJ("Rudolf", "password1234", "key", "key2", true, new Date(), 2),
-                new UserDataJ("Rudolf", "password1234", "key", "key2", true, new Date(), 2),
-                new UserDataJ("Rudolf", "password1234", "key", "key2", true, new Date(), 2)
+                new UserDataJ("Java", "password1234", "key", "key2", true, new Date(), 2),
+                new UserDataJ("Java", "password1234", "key", "key2", true, new Date(), 2),
+                new UserDataJ("Java", "password1234", "key", "key2", true, new Date(), 2),
+                new UserDataJ("Java", "password1234", "key", "key2", true, new Date(), 2)
         );
-        Sheet sheet1 = new Sheet("userData", data);
-        Sheet sheet2 = new Sheet("admins", data);
+        Sheet sheet1 = new Sheet("userData", data, null, null);
+        Sheet sheet2 = new Sheet("admins", data, null, null);
         ExcelExporter excelExporter = new ExcelExporter(file, sheet1, sheet2);
 
         //THEN
@@ -70,11 +70,11 @@ public class ExcelExporterJavaIT {
         Date date = new Date();
         for(int i = 0; i < 10000; i++){
             data.add(
-                new UserDataJ("Rudolf"+i, "password"+i, "key"+i, "key2_"+i, true, date, 2)
+                new UserDataJ("Java"+i, "password"+i, "key"+i, "key2_"+i, true, date, 2)
             );
         }
 
-        Sheet sheet = new Sheet("userData", data);
+        Sheet sheet = new Sheet("userData", data, null, null);
         ExcelExporter excelExporter = new ExcelExporter(file, sheet);
 
         //THEN

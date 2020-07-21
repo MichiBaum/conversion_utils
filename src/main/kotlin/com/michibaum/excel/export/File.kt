@@ -1,5 +1,6 @@
 package com.michibaum.excel.export
 
+import org.apache.poi.xssf.usermodel.XSSFCellStyle
 import org.apache.poi.xssf.usermodel.XSSFSheet
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import java.io.File
@@ -63,5 +64,20 @@ class File(
     internal fun write() {
         FileOutputStream(fullPath).use { workbook.write(it) }
     }
+
+    /**
+     *
+     */
+    private val styles = Styles(this.workbook)
+
+    /**
+     *
+     */
+    val defaultHeaderStyle: XSSFCellStyle = this.styles.HEADER_STYLE
+
+    /**
+     *
+     */
+    val defaultDataStyle: XSSFCellStyle = this.styles.DETAIL_ROW_STYLE
 
 }

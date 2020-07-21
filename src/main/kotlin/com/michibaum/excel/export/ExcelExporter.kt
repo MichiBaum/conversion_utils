@@ -3,6 +3,9 @@ package com.michibaum.excel.export
 import org.apache.poi.xssf.usermodel.XSSFCell
 import org.apache.poi.xssf.usermodel.XSSFSheet
 import java.lang.reflect.Field
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.*
 
 /**
  *
@@ -20,6 +23,17 @@ class ExcelExporter(
     private vararg val sheets: Sheet
 ) {
 
+    init {
+        sheets.forEach {sheet ->
+            if(sheet.headerStyle == null){
+                sheet.headerStyle = this.file.defaultHeaderStyle
+            }
+            if(sheet.dataStyle == null){
+                sheet.dataStyle = this.file.defaultDataStyle
+            }
+        }
+    }
+
     /**
      *
      */
@@ -27,9 +41,9 @@ class ExcelExporter(
         sheets.forEach { _sheet ->
             val xssfSheet = file.createSheet(_sheet.sheetname)
 
-            createHeader(_sheet.rows, xssfSheet)
+            createHeader(_sheet, xssfSheet)
 
-            fillData(_sheet.rows, xssfSheet)
+            fillData(_sheet, xssfSheet)
 
             setWidth(_sheet.rows, xssfSheet)
         }
@@ -61,36 +75,85 @@ class ExcelExporter(
     /**
      *
      */
-    private fun fillData(rows: List<Row>, sheet: XSSFSheet) {
+    private fun fillData(sheet: Sheet, xssfSheet: XSSFSheet) {
         var rowIndex = 1
-        rows.forEach { _row ->
-            val row = sheet.createRow(rowIndex)
-            _row.fields.forEach { field ->
-                field.isAccessible = true
-                val excelFieldAnnotation = field.getDeclaredAnnotation(ExcelField::class.java)
-                val cell = row.createCell(excelFieldAnnotation.order, excelFieldAnnotation.cellType)
-                fillCell(cell, field, _row)
+        sheet.rows.forEach { _row ->
+            val row = xssfSheet.createRow(rowIndex)
+            _row.fields.forEach { _field ->
+                _field.isAccessible = true
+                val excelFieldAnnotation = _field.getDeclaredAnnotation(ExcelField::class.java)
+                row.createCell(excelFieldAnnotation.order, excelFieldAnnotation.cellType).also { _cell ->
+                    _cell.cellStyle = sheet.dataStyle
+                    _cell.cellType = excelFieldAnnotation.cellType
+                    fillCell(_cell, _field, _row)
+                }
             }
             rowIndex++
         }
     }
 
     /**
+     * Compare types and fill them as it into XSSFCell.
      *
+     * !! Doesnt work with java non primitive types !!
+     * !! In java Data class use primitive types !!
+     *
+     * !! Kotlin nullable datatypes not detected !!
+     * !! Kotlin use not nullable datatypes !!
      */
+    //TODO Add java non primitive data types detection
+    //TODO Kotlin nullable datatypes not detected
     private fun fillCell(cell: XSSFCell, field: Field, row: Row) {
-        cell.setCellValue(field.get(row.referenceObject).toString())
+        val fieldValue = field.get(row.referenceObject)
+        when(field.type){
+            Int::class.java -> {
+                cell.setCellValue((fieldValue as Int).toDouble())
+            }
+            Double::class.java -> {
+                cell.setCellValue(fieldValue as Double)
+            }
+            Float::class.java -> {
+                cell.setCellValue((fieldValue as Float).toDouble())
+            }
+            Long::class.java -> {
+                cell.setCellValue((fieldValue as Long).toDouble())
+            }
+            Boolean::class.java -> {
+                cell.setCellValue(fieldValue as Boolean)
+            }
+            LocalDateTime::class.java -> {
+                cell.setCellValue(fieldValue as LocalDateTime)
+            }
+            LocalDate::class.java -> {
+                cell.setCellValue(fieldValue as LocalDate)
+            }
+            Date::class.java -> {
+                cell.setCellValue(fieldValue as Date)
+            }
+            Calendar::class.java -> {
+                cell.setCellValue(fieldValue as Calendar)
+            }
+            else -> {
+                cell.setCellValue(fieldValue.toString())
+            }
+        }
+
+
+
     }
 
     /**
      *
      */
-    private fun createHeader(rows: List<Row>, sheet: XSSFSheet) {
-        val row = sheet.createRow(0)
-        rows.first().fields.forEach { _field ->
+    private fun createHeader(sheet: Sheet, xssfSheet: XSSFSheet) {
+        val row = xssfSheet.createRow(0)
+        sheet.rows.first().fields.forEach { _field ->
             _field.isAccessible = true
             val excelFieldAnnotation = _field.getDeclaredAnnotation(ExcelField::class.java)
-            row.createCell(excelFieldAnnotation.order).setCellValue(excelFieldAnnotation.headerText)
+            row.createCell(excelFieldAnnotation.order).also { _cell ->
+                _cell.setCellValue(excelFieldAnnotation.headerText)
+                _cell.cellStyle = sheet.headerStyle
+            }
         }
     }
 
