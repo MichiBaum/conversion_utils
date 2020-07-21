@@ -1,6 +1,7 @@
 package com.michibaum.excel.export.kotlin
 
 import com.michibaum.excel.export.*
+import org.apache.poi.ss.usermodel.CellType
 import org.junit.jupiter.api.Test
 import java.util.*
 
@@ -97,7 +98,7 @@ class UserDataK(
     val active: Boolean,
     @ExcelField(headerText = "Last login", order = 2, width = ColumnWidth.MIDDLE)
     val lastLogin: Date,
-    @ExcelField(headerText = "number", order = 2, width = ColumnWidth.MIDDLE)
+    @ExcelField(headerText = "number", order = 2, width = ColumnWidth.MIDDLE, cellType = CellType.NUMERIC)
     val number: Int
 ): ExcelExportClass() {
 

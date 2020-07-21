@@ -68,7 +68,7 @@ class ExcelExporter(
             _row.fields.forEach { field ->
                 field.isAccessible = true
                 val excelFieldAnnotation = field.getDeclaredAnnotation(ExcelField::class.java)
-                val cell = row.createCell(excelFieldAnnotation.order)
+                val cell = row.createCell(excelFieldAnnotation.order, excelFieldAnnotation.cellType)
                 fillCell(cell, field, _row)
             }
             rowIndex++
