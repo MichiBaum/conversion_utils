@@ -73,7 +73,7 @@ class ExcelExporter(
     }
 
     /**
-     *
+     * For every row in the sheet it creates a row and fills the cell with the row data object
      */
     private fun fillData(sheet: Sheet, xssfSheet: XSSFSheet) {
         var rowIndex = 1
@@ -143,7 +143,7 @@ class ExcelExporter(
     }
 
     /**
-     *
+     * creates the header row and fill the data
      */
     private fun createHeader(sheet: Sheet, xssfSheet: XSSFSheet) {
         val row = xssfSheet.createRow(0)
