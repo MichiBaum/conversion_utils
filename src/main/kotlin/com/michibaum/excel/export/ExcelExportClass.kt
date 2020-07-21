@@ -9,9 +9,9 @@ open class ExcelExportClass {
      * Gets all the fields with the annotation ExcelField and put it into a Row object
      */
     internal fun getFieldsWithAnnotation() =
-        Row(
+        com.michibaum.excel.export.Row(
             this::class.java.declaredFields.toList()
-                .filter{ _field ->
+                .filter { _field ->
                     return@filter _field.isAnnotationPresent(ExcelField::class.java)
                 },
             this

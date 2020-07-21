@@ -28,7 +28,7 @@ public class ExcelExporterJavaIT {
                 new UserDataJ("Rudolf", "password1234", "key", "key2", true, new Date())
         );
         Sheet sheet = new Sheet("userData", data);
-        ExcelExporter excelExporter = new ExcelExporter(file, List.of(sheet));
+        ExcelExporter excelExporter = new ExcelExporter(file, sheet);
 
         //THEN
         excelExporter.process();
@@ -49,8 +49,9 @@ public class ExcelExporterJavaIT {
                 new UserDataJ("Rudolf", "password1234", "key", "key2", true, new Date()),
                 new UserDataJ("Rudolf", "password1234", "key", "key2", true, new Date())
         );
-        List<Sheet> sheets = List.of(new Sheet("userData", data), new Sheet("admins", data));
-        ExcelExporter excelExporter = new ExcelExporter(file, sheets);
+        Sheet sheet1 = new Sheet("userData", data);
+        Sheet sheet2 = new Sheet("admins", data);
+        ExcelExporter excelExporter = new ExcelExporter(file, sheet1, sheet2);
 
         //THEN
         excelExporter.process();
@@ -73,8 +74,8 @@ public class ExcelExporterJavaIT {
             );
         }
 
-        List<Sheet> sheets = List.of(new Sheet("userData", data));
-        ExcelExporter excelExporter = new ExcelExporter(file, sheets);
+        Sheet sheet = new Sheet("userData", data);
+        ExcelExporter excelExporter = new ExcelExporter(file, sheet);
 
         //THEN
         excelExporter.process();

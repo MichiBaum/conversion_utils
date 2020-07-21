@@ -23,7 +23,7 @@ class ExcelExporterKotlinIT {
             UserDataK("Rudolf", "password1234", "key", "key2", true, Date())
         )
         val sheet = Sheet("userData", data)
-        val excelExporter = ExcelExporter(file, listOf(sheet))
+        val excelExporter = ExcelExporter(file, sheet)
 
         //THEN
         excelExporter.process()
@@ -45,8 +45,9 @@ class ExcelExporterKotlinIT {
             UserDataK("Rudolf", "password1234", "key", "key2", true, Date()),
             UserDataK("Rudolf", "password1234", "key", "key2", true, Date())
         )
-        val sheets = listOf(Sheet("userData", data), Sheet("admins", data))
-        val excelExporter = ExcelExporter(file, sheets)
+        val sheet1 = Sheet("userData", data)
+        val sheet2 = Sheet("admins", data)
+        val excelExporter = ExcelExporter(file, sheet1, sheet2)
 
         //THEN
         excelExporter.process()
@@ -69,8 +70,8 @@ class ExcelExporterKotlinIT {
                 UserDataK("Rudolf$i", "password$i", "key$i", "key2_$i", true, date)
             )
         }
-        val sheets = listOf(Sheet("userData", data))
-        val excelExporter = ExcelExporter(file, sheets)
+        val sheet = Sheet("userData", data)
+        val excelExporter = ExcelExporter(file, sheet)
 
         //THEN
         excelExporter.process()

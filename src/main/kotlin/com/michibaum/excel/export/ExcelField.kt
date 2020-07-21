@@ -1,5 +1,7 @@
 package com.michibaum.excel.export
 
+import com.michibaum.excel.export.ColumnWidth.*
+
 @Target(AnnotationTarget.FIELD)
 @Retention(AnnotationRetention.RUNTIME)
 /**
@@ -20,5 +22,6 @@ annotation class ExcelField(
     /**
      * Enum to set Column width
      */
-    val width: ColumnWidth = ColumnWidth.AUTO
+    val width: ColumnWidth = AUTO
+
 )

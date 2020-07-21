@@ -17,7 +17,7 @@ class ExcelExporter(
     /**
      *
      */
-    private val sheets: List<Sheet>
+    private vararg val sheets: Sheet
 ) {
 
     /**
