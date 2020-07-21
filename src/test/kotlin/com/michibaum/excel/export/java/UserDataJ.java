@@ -28,13 +28,17 @@ class UserDataJ extends ExcelExportClass {
     @ExcelField(headerText = "Last login", order = 2, width = ColumnWidth.MIDDLE)
     Date lastLogin;
 
-    UserDataJ(String username, String password, String key, String key2, Boolean active, Date lastLogin){
+    @ExcelField(headerText = "number", order = 2, width = ColumnWidth.MIDDLE)
+    Integer number;
+
+    UserDataJ(String username, String password, String key, String key2, Boolean active, Date lastLogin, Integer number){
         this.username = username;
         this.password = password;
         this.key = key;
         this.key2 = key2;
         this.active = active;
         this.lastLogin = lastLogin;
+        this.number = number;
     }
 
     public String getKeysTogether(){
