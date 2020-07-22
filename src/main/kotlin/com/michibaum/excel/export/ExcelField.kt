@@ -31,13 +31,6 @@ annotation class ExcelField(
      *
      * @author Baumberger Michael
      */
-    val width: ColumnWidth = AUTO,
-
-    /**
-     * The celltype in excel
-     *
-     * @author Baumberger Michael
-     */
-    val cellType: CellType = CellType.STRING
+    val width: ColumnWidth = AUTO
 
 )

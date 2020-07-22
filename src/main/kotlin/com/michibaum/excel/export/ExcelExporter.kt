@@ -100,9 +100,8 @@ class ExcelExporter(
             _row.fields.forEach { _field ->
                 _field.isAccessible = true
                 val excelFieldAnnotation = _field.getDeclaredAnnotation(ExcelField::class.java)
-                row.createCell(excelFieldAnnotation.order, excelFieldAnnotation.cellType).also { _cell ->
+                row.createCell(excelFieldAnnotation.order).also { _cell ->
                     _cell.cellStyle = sheet.dataStyle
-                    _cell.cellType = excelFieldAnnotation.cellType
                     fillCell(_cell, _field, _row)
                 }
             }
